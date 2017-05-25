@@ -16,6 +16,17 @@
     that:
       - "results.stdout == '{{ become_test_user }}'"
 
+- name: test becoming user with become_method su
+  shell: whoami
+  become: True
+  become_user: "{{ become_test_user }}"
+  become_method: su
+  register: results
+
+- assert:
+    that:
+      - "results.stdout == '{{ become_test_user }}'"
+
 - name: tilde expansion honors become in file
   become: True
   become_user: "{{ become_test_user }}"
